@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-app
+  namespace: cicd
   labels:
     app: hello-app
 spec:
@@ -48,6 +49,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-app
+  namespace: cicd
 spec:
   selector:
     app: hello-app
