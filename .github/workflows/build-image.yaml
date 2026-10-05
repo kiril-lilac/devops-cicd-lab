@@ -50,11 +50,26 @@ jobs:
         env:
           IMAGE: ${{ steps.meta.outputs.tags }}
         run: |
-          sed -i "s|image: .*|image: ${IMAGE}|" k8s/deployment.yaml
+          set -eu
+
+          image_count=$(printf '%s\n' "$IMAGE" | sed '/^[[:space:]]*$/d' | wc -l)
+
+          if [ "$image_count" -ne 1 ]; then
+            echo "Expected exactly one image tag, got:"
+            printf '%s\n' "$IMAGE"
+            exit 1
+          fi
+
+          sed -i -E \
+            "s|^[[:space:]]*image:.*$|          image: ${IMAGE}|" \
+            k8s/deployment.yaml
+
           grep -n "image:" k8s/deployment.yaml
 
       - name: Commit and push manifest update
         run: |
+          set -eu
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
