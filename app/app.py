@@ -5,7 +5,7 @@ import os
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         version = os.getenv("APP_VERSION", "unknown")
-        body = f"Hello from Kubernetes - version {version}\n".encode()
+        body = f"Hello from Kubernetes - version {version} - automatic update\n".encode()
 
         self.send_response(200)
         self.send_header("Content-Type", "text/plain")
