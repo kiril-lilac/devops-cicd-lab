@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: hello-app
-          image: ghcr.io/kiril-lilac/devops-cicd-lab:latest
+          image: 
           imagePullPolicy: Always
           ports:
             - name: http
